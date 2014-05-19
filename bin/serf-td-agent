@@ -3,21 +3,36 @@
 INIT_SCRIPT = "/etc/init.d/td-agent"
 event = ENV['SERF_EVENT']
 user_event = ENV['SERF_USER_EVENT']
+td_agent_event = user_event[9..-1] if user_event and user_event.start_with?('td-agent-')
 
-def usage
-  puts "Usage: SERF_EVENT=user SERF_USER_EVENT={start|stop|reload|restart|condrestart|status|configtest} #{$PROGRAM_NAME}"
+if ARGV[0] == "-h"
+  puts "Usage: SERF_EVENT=user SERF_USER_EVENT={event} #{$PROGRAM_NAME}"
+  puts ""
+  puts "AVAILABLE EVENTS:"
+  puts "  td-agent-start"
+  puts "  td-agent-stop"
+  puts "  td-agent-reload"
+  puts "  td-agent-restart"
+  puts "  td-agent-condrestart"
+  puts "  td-agent-status"
+  puts "  td-agent-configtest"
+  puts ""
+  puts "WITH SERF:"
+  puts "  serf event {event}"
+  exit 0
 end
 
 status = 0
 case event
 when "user"
-  case user_event
+  case td_agent_event
   when "start", "stop", "reload", "restart", "condrestart", "status", "configtest"
-    status = system "sudo #{INIT_SCRIPT} #{user_event}"
+    status = system "sudo #{INIT_SCRIPT} #{td_agent_event}"
   else
-    usage and exit 1
+    # should i put error messages or just ignore in serf manner??
+    exit 1
   end
 else
-  usage and exit 1
+  exit 1
 end
 exit $status
