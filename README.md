@@ -70,3 +70,4 @@ See [CHANGELOG.md](CHANGELOG.md) for details.
 
 Copyright (c) 2014 Naotoshi Seo. See [LICENSE](LICENSE) for details.
 
+The license of `serf` belongs to serf. See [serf/LICENSE](https://github.com/hashicorp/serf/blob/master/LICENSE). 

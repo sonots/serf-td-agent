@@ -28,6 +28,6 @@ SERF_BASEURI="https://dl.bintray.com/mitchellh/serf"
 SERF_VERSION="0.6.0"
 # curl --insecure --silent -L -O  https://dl.bintray.com/mitchellh/serf/0.6.0_linux_amd64.zip
 zip_filename = "#{SERF_VERSION}_#{os}_#{arch}.zip"
-puts "Downloading and inflating #{SERF_BASEURI}/#{zip_filename} ..."
+system "rm -f #{File.expand_path('../../../bin/serf', __FILE__)}"
 system "#{CURL_CMD} #{SERF_BASEURI}/#{zip_filename}"
 system "unzip #{zip_filename} -d #{File.expand_path('../../../bin', __FILE__)}"
