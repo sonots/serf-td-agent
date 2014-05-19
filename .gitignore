@@ -1,0 +1,5 @@
+*.gem
+Makefile
+*.zip
+bin/serf
+tmp/*
