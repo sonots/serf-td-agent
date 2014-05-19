@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency "gem-path", '~> 0'
+  s.add_development_dependency "rake"
 end
