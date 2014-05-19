@@ -28,11 +28,6 @@ when "user"
   case td_agent_event
   when "start", "stop", "reload", "restart", "condrestart", "status", "configtest"
     status = system "sudo #{INIT_SCRIPT} #{td_agent_event}"
-  else
-    # should i put error messages or just ignore in serf manner??
-    exit 1
   end
-else
-  exit 1
 end
-exit $status
+exit status

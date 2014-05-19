@@ -10,21 +10,27 @@ Use RubyGems:
 gem install serf-td-agent
 ```
 
-The `serf` command is automatically downloaded and bundled with `gem install`. The command is located at the `bin` directory of the gem. 
+The `serf` command is automatically downloaded and bundled into the `bin` directory. Set the environment variable `PATH` as:
+
+```
+export PATH=$(gem path serf-td-agent)/bin:$PATH
+```
 
 ## How to setup the serf cluster
 
 Run the first serf at any of hosts to run td-agent like:
 
 ```bash
-$ serf agent -event-handler=$(which serf-td-agent)
+$ serf agent -event-handler=serf-td-agent
 ```
 
 Run later serfs at other hosts to run td-agent like:
 
 ```bash
-$ serf agent -join={the first serf address} -event-handler=$(which serf-td-agent)
+$ serf agent -join=${the first serf address} -event-handler=serf-td-agent
 ```
+
+Hint: `-log-level=debug` option should be helpful for debugging. 
 
 ## How to start td-agent via serf
 
