@@ -4,43 +4,46 @@ td-agent process management with [serf](http://www.serfdom.io/)
 
 ## Installation
 
-Use RubyGems:
+Assume you have installed [td-agent](http://docs.fluentd.org/categories/installation).
+
+Use [fluent-gem](http://docs.fluentd.org/articles/faq#i-installed-td-agent-and-want-to-add-custom-plugins-how-do-i-do-it):
 
 ```
-gem install serf-td-agent
+fluent-gem install serf-td-agent
 ```
 
-The `serf` command is automatically downloaded and bundled into the `bin` directory. Set the environment variable `PATH` as:
+The `serf` command is automatically downloaded and bundled into the `bin` directory of the gem.
+Also, `serf-td-agent` command, which is a serf event handler, is located at there. Set the environment variable `PATH` as:
 
 ```
-export PATH=$(gem path serf-td-agent)/bin:$PATH
+export PATH=$(fluent-gem path serf-td-agent)/bin:$PATH
 ```
 
 ## How to setup the serf cluster
 
-Run the first serf at any of hosts to run td-agent like:
+Run the first serf at any of hosts running td-agent like:
 
 ```bash
 $ serf agent -event-handler=serf-td-agent
 ```
 
-Run later serfs at other hosts to run td-agent like:
+Run later serfs at other hosts running td-agent like:
 
 ```bash
-$ serf agent -join=${the first serf address} -event-handler=serf-td-agent
+$ serf agent -join={the first serf address} -event-handler=serf-td-agent
 ```
 
-Hint: `-log-level=debug` option should be helpful for debugging. 
+Hint: `-log-level=debug` option would be helpful for debugging. 
 
-## How to start td-agent via serf
+## How to restart td-agent via serf
 
 Send a serf event from any of hosts running the serf like:
 
 ```bash
-$ serf event td-agent-start
+$ serf event td-agent-restart
 ```
 
-This will propagate the `start` event to the entire serf cluster and execute `sudo /etc/init.d/td-agent start` at all hosts.
+This will propagate the `td-agent-restart` event to the entire serf cluster and execute `sudo /etc/init.d/td-agent restart` at all hosts.
 
 ## Available events
 
