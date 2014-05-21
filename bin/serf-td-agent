@@ -2,13 +2,14 @@
 
 INIT_SCRIPT = "/etc/init.d/td-agent"
 event = ENV['SERF_EVENT']
-user_event = ENV['SERF_USER_EVENT']
+user_event = ENV['SERF_USER_EVENT'] || ENV['SERF_QUERY_NAME']
 td_agent_event = user_event[9..-1] if user_event and user_event.start_with?('td-agent-')
 
 if ARGV[0] == "-h"
-  puts "Usage: SERF_EVENT=user SERF_USER_EVENT={event} #{$PROGRAM_NAME}"
+  puts "Usage: SERF_EVENT=user  SERF_USER_EVENT={event} #{File.basename($PROGRAM_NAME)}"
+  puts "Usage: SERF_EVENT=query SERF_QUERY_NAME={query} #{File.basename($PROGRAM_NAME)}"
   puts ""
-  puts "AVAILABLE EVENTS:"
+  puts "AVAILABLE EVENTS|QUERIES:"
   puts "  td-agent-start"
   puts "  td-agent-stop"
   puts "  td-agent-reload"
@@ -19,15 +20,13 @@ if ARGV[0] == "-h"
   puts ""
   puts "WITH SERF:"
   puts "  serf event {event}"
+  puts "  serf query {query}"
   exit 0
 end
 
 status = 0
-case event
-when "user"
-  case td_agent_event
-  when "start", "stop", "reload", "restart", "condrestart", "status", "configtest"
-    status = system "sudo #{INIT_SCRIPT} #{td_agent_event}"
-  end
+case td_agent_event
+when "start", "stop", "reload", "restart", "condrestart", "status", "configtest"
+  status = system "sudo #{INIT_SCRIPT} #{td_agent_event}"
 end
 exit status

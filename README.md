@@ -59,10 +59,6 @@ Following events are available:
 
 which corresponds with /etc/init.d/td-agent command. 
 
-## ToDo
-
-Use `serf query` for commands which requires responses like `status` and `configtest`. 
-
 ## ChangeLog
 
 See [CHANGELOG.md](CHANGELOG.md) for details.
