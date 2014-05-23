@@ -17,7 +17,8 @@ def unzip(zip_file, dest = '.')
   require 'zip/zip'
   Zip::ZipFile.open(zip_file) do |zip|
     zip.each do |entry|
-      zip.extract(entry, "#{dest}/#{entry.to_s}") { true } # true to overwrite
+      entry.restore_permissions = true
+      entry.extract("#{dest}/#{entry.to_s}") { true } # true to overwrite
     end
   end
 end
