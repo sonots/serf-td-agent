@@ -3,3 +3,4 @@ Makefile
 *.zip
 tmp/*
 Gemfile.lock
+bin/serf
