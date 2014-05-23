@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "serf-td-agent"
-  s.version     = "0.1.0"
+  s.version     = "0.1.1"
   s.authors     = ["Naotoshi Seo"]
   s.email       = ["sonots@gmail.com"]
   s.homepage    = "http://github.com/sonots/serf-td-agent"
